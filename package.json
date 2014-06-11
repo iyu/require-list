@@ -1,0 +1,22 @@
+{
+  "name": "require-list",
+  "version": "0.0.1",
+  "description": "require tree list",
+  "main": "index.js",
+  "bin": {
+    "rlist": "bin/rlist.js"
+  },
+  "dependencies": {
+    "commander": "~2.2.0"
+  },
+  "devDependencies": {
+    "should": "~3.3.1",
+    "jshint": "~2.5.0",
+    "mocha": "~1.18.2"
+  },
+  "scripts": {
+    "test": "mocha -r should -R spec --recursive test"
+  },
+  "author": "Yuhei Aihara",
+  "license": "MIT"
+}
