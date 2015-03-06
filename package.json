@@ -1,22 +1,42 @@
 {
   "name": "require-list",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "require tree list",
   "main": "index.js",
+  "scripts": {
+    "test": "mocha --require intelli-espower-loader -R spec --recursive test",
+    "jshint": "jshint lib/*.js"
+  },
   "bin": {
     "rlist": "bin/rlist.js"
   },
+  "directories": {
+    "test": "test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/iyu/require-list.git"
+  },
+  "keywords": [
+    "require",
+    "tree",
+    "list",
+    "rlist",
+    "require-list"
+  ],
+  "author": "Yuhei Aihara",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iyu/require-list/issues"
+  },
   "dependencies": {
-    "commander": "~2.2.0"
+    "esprima": "^1.2.5"
   },
   "devDependencies": {
-    "should": "~3.3.1",
-    "jshint": "~2.5.0",
-    "mocha": "~1.18.2"
-  },
-  "scripts": {
-    "test": "mocha -r should -R spec --recursive test"
-  },
-  "author": "Yuhei Aihara",
-  "license": "MIT"
+    "espower-loader": "^0.10.0",
+    "intelli-espower-loader": "^0.5.0",
+    "jshint": "^2.6.3",
+    "mocha": "^2.1.0",
+    "power-assert": "^0.10.1"
+  }
 }

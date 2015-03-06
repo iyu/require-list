@@ -1,64 +1,35 @@
 #!/usr/bin/env node
+var fs = require('fs');
 var path = require('path');
 
-var commander = require('commander');
+var requireTree = require('../');
 
-var package = require('../package');
+var input = process.argv[2];
+var version = require('../package').version;
 
-commander
-  .version(package.version)
-  .usage('[options] -e <file>')
-  .option('-e, --entry <file>', 'entry point')
-  .option('-a, --argv <argv>', 'entry argv')
-  .option('-w, --wait <time>', 'wait time (ms)')
-  .parse(process.argv);
-
-
-if (!commander.entry) {
-  console.log('please specify entry point: -e --entry <file>');
-  process.exit(2);
-}
-commander.argv = commander.argv || '';
-commander.wait = commander.wait || 0;
-
-var entry = path.resolve(process.cwd(), commander.entry);
-var argv = [ 'node', entry ].concat(commander.argv.split(' '));
-var wait = Number(commander.wait);
-
-process.argv = argv;
-require(entry);
-
-function output() {
-
-  // entry point
-  var entryDir = path.dirname(entry);
-  console.log(entry.replace(entryDir, '.'));
-
-  function childTree(children, level) {
-    var i, len;
-    var space = '';
-    for (i = 0; i < level; i++) {
-      space += '   |';
-    }
-    space += '   ├─';
-
-    for (i = 0, len = children.length; i < len; i++) {
-      var filePath = children[i].id.replace(entryDir, '.');
-      if (/node_modules/.test(filePath)) {
-        continue;
-      }
-      console.log(space, filePath);
-      if (children[i].children.length) {
-        childTree(children[i].children, level + 1);
-      }
-    }
-  }
-
-  var children = require.cache[entry].children;
-  childTree(children, 0);
+if (!input) {
+  console.error('Error parsing command line: not found option');
+  console.error('try \'rlist --help\' for more information');
+  process.exit(1);
 }
 
-setTimeout(function() {
-  output();
+if (fs.existsSync(path.resolve(input))) {
+  console.log(requireTree.string(input, true));
   process.exit(0);
-}, wait);
+}
+
+if (input === '--version' || input === 'version') {
+  console.log(version);
+  process.exit(0);
+}
+
+if (input === '--help' || input === 'help') {
+  console.log('Usage: rlist [JavaScript file path in entry-point]');
+  console.log('Options:');
+  console.log('  --version, version\tshow version');
+  process.exit(0);
+}
+
+console.error('Error parsing command line: unknown option', input);
+console.error('try \'rlist --help\' for more information');
+process.exit(1);

@@ -8,104 +8,71 @@ Required children tree.
 npm install -g require-list
 ```
 
-## Command
-### rlist
+## Usage
+### Command
+```
+rlist [javascript file path in entry-point]
+```
 #### Example
-##### Case 1
-a.js
+/tmp/a.js
+```javascript
+var b = require('./b');
+var test = require('./test');
 ```
-require('./b');
-console.log('done: a');
+
+/tmp/b.js
+```javascript
+require('./test/c');
+module.exports = 'b';
 ```
-b.js
-```
+
+/tmp/test/index.js
+```javascript
 require('./c');
-console.log('done: b');
-```
-c.js
-```
-console.log('done: c');
 ```
 
-command
-```
-$ rlist -e a.js
-done: c
-done: b
-done: a
-./a.js
-   ├─ ./b.js
-   |   ├─ ./c.js
-```
-##### Case 2
-a.js
-```
-setTimeout(function() {
-  require('./b');
-}, 1000);
-console.log('done: a');
-```
-b.js
-```
-require('./c');
-console.log('done: b');
-```
-c.js
-```
-console.log('done: c');
+/tmp/test/c.js
+```javascript
+module.exports = function() { return 'c' };
 ```
 
-bad command
 ```
-$ rlist -e a.js
-done: a
-./a.js
-```
-good command
-```
-$ rlist -e a.js -w 1000
-done: a
-done: c
-done: b
-./a.js
-   ├─ ./b.js
-   |   ├─ ./c.js
-```
-##### Case 3
-a.js
-```
-if (process.argv.length < 4) {
-  console.log('unknown option "-c --config <path>"');
-  process.exit(1);
-}
-require('./b');
-console.log('done: a');
-```
-b.js
-```
-require('./c');
-console.log('done: b');
-```
-c.js
-```
-console.log('done: c');
+$ rlist /tmp/a.js
+/tmp/a.js
+   ├─ b.js
+   |   ├─ test/c.js
+   ├─ test/index.js
+   |   ├─ test/c.js
 ```
 
-bad command
-```
-$ rlist -e a.js
-unknown option "-c --config <path>"
-```
-good command
-```
-$ rlist -e a.js -a '-c conf/local.json'
-done: c
-done: b
-done: a
-./a.js
-   ├─ ./b.js
-   |   ├─ ./c.js
+### Module API
+#### Example
+```javascript
+var rlist = require('require-list');
+
+console.log('rlist(filepath)');
+console.log(rlist('/tmp/a.js'));
+
+console.log('rlist.string(filepath)');
+console.log(rlist.string('/tmp/a.js'));
+
+// --output--
+// rlist(filepath)
+// { '/tmp/b.js': { '/tmp/test/c.js': {} },
+//  '/tmp/test/index.js': { '/tmp/test/c.js': {} } } }
+
+// rlist.string(filepath)
+// /tmp/a.js
+//    ├─ b.js
+//    |   ├─ test/c.js
+//    ├─ test/index.js
+//    |   ├─ test/c.js
 ```
 
-## Test
-Run `npm test` and `npm run-script jshint`
+## Contribution
+1. Fork it ( [https://github.com/iyu/require-list/fork](https://github.com/iyu/require-list/fork) )
+2. Create a feature branch
+3. Commit your changes
+4. Rebase your local changes against the master branch
+5. Run test suite with the `npm test; npm run-script jshint` command and confirm that it passes
+5. Create new Pull Request
