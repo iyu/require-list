@@ -1,6 +1,6 @@
 {
   "name": "require-list",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "require tree list",
   "main": "index.js",
   "scripts": {
