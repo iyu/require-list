@@ -22,12 +22,12 @@ describe('rlist', function() {
   it('#string', function() {
     var result = rlist.string(testEntryPoint);
     var expect = path.join(__dirname, './data/index.js') + '\n';
-    expect += '   ├─ path\n';
-    expect += '   ├─ esprima\n';
-    expect += '   ├─ a.js\n';
-    expect += '   |   ├─ b/index.js\n';
-    expect += '   |   |   ├─ c.json\n';
-    expect += '   |   ├─ c.json\n';
+    expect += '├── path\n';
+    expect += '├── esprima\n';
+    expect += '└── a.js\n';
+    expect += '    ├── b/index.js\n';
+    expect += '    │   └── c.json\n';
+    expect += '    └── c.json\n';
 
     assert.equal(result, expect);
   });

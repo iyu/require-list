@@ -39,10 +39,10 @@ module.exports = function() { return 'c' };
 ```
 $ rlist /tmp/a.js
 /tmp/a.js
-   ├─ b.js
-   |   ├─ test/c.js
-   ├─ test/index.js
-   |   ├─ test/c.js
+   ├── b.js
+   |   └── test/c.js
+   └── test/index.js
+       └── test/c.js
 ```
 
 ### Module API
@@ -63,10 +63,10 @@ console.log(rlist.string('/tmp/a.js'));
 
 // rlist.string(filepath)
 // /tmp/a.js
-//    ├─ b.js
-//    |   ├─ test/c.js
-//    ├─ test/index.js
-//    |   ├─ test/c.js
+//    ├── b.js
+//    |   └── test/c.js
+//    └── test/index.js
+//        └── test/c.js
 ```
 
 ## Contribution
@@ -74,5 +74,5 @@ console.log(rlist.string('/tmp/a.js'));
 2. Create a feature branch
 3. Commit your changes
 4. Rebase your local changes against the master branch
-5. Run test suite with the `npm test; npm run-script jshint` command and confirm that it passes
+5. Run test suite with the `npm test; npm run jshint` command and confirm that it passes
 5. Create new Pull Request
