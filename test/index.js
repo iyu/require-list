@@ -31,4 +31,17 @@ describe('rlist', function() {
 
     assert.equal(result, expect);
   });
+
+  it('dynamic load require', function() {
+    var result = rlist.string('./test/data/lib/index.js', false, true);
+    var expect = path.join(__dirname, './data/lib/index.js') + '\n';
+    expect += '├── fs\n';
+    expect += '├── path\n';
+    expect += '├── a.js\n';
+    expect += '│   └── b.js\n';
+    expect += '├── b.js\n';
+    expect += '└── c.js\n';
+
+    assert.equal(result, expect);
+  });
 });
