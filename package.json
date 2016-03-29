@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "escodegen": "^1.6.1",
-    "esprima": "^1.2.5"
+    "esprima": "^2.7.2"
   },
   "devDependencies": {
     "espower-loader": "^0.10.0",
